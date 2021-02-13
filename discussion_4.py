@@ -37,17 +37,23 @@ class Warehouse:
 
 	# Adds an item to the warehouse	
 	def add_item(self, item):
-		pass
+		self.items += [item]
 
 	# Returns the item in the warehouse with the most stock		
 	def get_max_stock(self):
-		pass
+		workingdict = {}
+		for item in self.items:
+			workingdict[item.name] = workingdict.get(item.name, 0) + 1
+		workingdictlist = sorted(workingdict.items(), key = lambda a : a[1])
+		return workingdictlist[0]
 	
 	# Returns the item in the warehouse with the highest price
 	def get_max_price(self):
-		pass	
-
-
+		max_price_tuple= (0, None)
+		for item in self.items:
+			if item.price() > max_price_tuple[0]:
+				max_price_tuple = (item.price, item)
+		return max_price_tuple[1]
 
 # Tests
 class TestAllMethods(unittest.TestCase):
@@ -68,13 +74,19 @@ class TestAllMethods(unittest.TestCase):
 
 	## Check to see whether you can add an item to the warehouse
 	def test_add_item(self):
-		pass
-
+		w1 = Warehouse()
+		olditems = w1.items[:]
+		i1 = Item('boxofthings', '3', '18')
+		w1.add_item(i1)
+		newitems = w1.items[:]
+		self.assertNotEqual(olditems, newitems)
 
 	## Check to see whether warehouse correctly returns the item with the most stock
-	def test_warehouse_max_stocks(self):
-		pass
-
+	def test_warehouse_max_stocks(self): # Still requires fixing
+		w1 = Warehouse([self.item1, self.item2, self.item3])
+		result = w1.get_max_stock()
+		print(result)
+		self.assertEqual(result, self.item3.name)
 
 	# Check to see whether the warehouse correctly return the item with the highest price
 	def test_warehouse_max_price(self):
