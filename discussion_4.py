@@ -41,11 +41,8 @@ class Warehouse:
 
 	# Returns the item in the warehouse with the most stock		
 	def get_max_stock(self):
-		workingdict = {}
-		for item in self.items:
-			workingdict[item.name] = workingdict.get(item.name, 0) + 1
-		workingdictlist = sorted(workingdict.items(), key = lambda a : a[1])
-		return workingdictlist[0]
+		workinglist = sorted([(item.name, item.stock) for item in self.items], key = lambda a : a[1], reverse = True)
+		return workinglist[0][0]
 	
 	# Returns the item in the warehouse with the highest price
 	def get_max_price(self):
@@ -85,7 +82,6 @@ class TestAllMethods(unittest.TestCase):
 	def test_warehouse_max_stocks(self): # Still requires fixing
 		w1 = Warehouse([self.item1, self.item2, self.item3])
 		result = w1.get_max_stock()
-		print(result)
 		self.assertEqual(result, self.item3.name)
 
 	# Check to see whether the warehouse correctly return the item with the highest price
