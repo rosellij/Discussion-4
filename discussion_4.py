@@ -33,7 +33,7 @@ class Warehouse:
 	def print_items(self):
 		for item in self.items:
 			print(item)
-			print("\n")	# FLAGGED FOR MAYBE NOT BEING THE RIGHT THING?
+			print("\n")
 
 	# Adds an item to the warehouse	
 	def add_item(self, item):
@@ -46,11 +46,8 @@ class Warehouse:
 	
 	# Returns the item in the warehouse with the highest price
 	def get_max_price(self):
-		max_price_tuple= (0, None)
-		for item in self.items:
-			if item.price() > max_price_tuple[0]:
-				max_price_tuple = (item.price, item)
-		return max_price_tuple[1]
+		workinglist = sorted([(item.name, item.price) for item in self.items], key = lambda a : a[1], reverse = True)
+		return workinglist[0][0]
 
 # Tests
 class TestAllMethods(unittest.TestCase):
@@ -86,8 +83,9 @@ class TestAllMethods(unittest.TestCase):
 
 	# Check to see whether the warehouse correctly return the item with the highest price
 	def test_warehouse_max_price(self):
-		pass
-		
+		w1 = Warehouse([self.item1, self.item2, self.item3])
+		result = w1.get_max_price()
+		self.assertEqual(result, self.item1.name)
 
 def main():
 	unittest.main(verbosity = 2)
