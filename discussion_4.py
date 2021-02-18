@@ -76,7 +76,7 @@ class TestAllMethods(unittest.TestCase):
 		self.assertNotEqual(olditems, newitems)
 
 	## Check to see whether warehouse correctly returns the item with the most stock
-	def test_warehouse_max_stocks(self): # Still requires fixing
+	def test_warehouse_max_stocks(self):
 		w1 = Warehouse([self.item1, self.item2, self.item3])
 		result = w1.get_max_stock()
 		self.assertEqual(result, self.item3.name)
